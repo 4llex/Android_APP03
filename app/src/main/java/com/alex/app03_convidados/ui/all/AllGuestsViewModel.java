@@ -1,16 +1,16 @@
-package com.alex.app03_convidados.ui.slideshow;
+package com.alex.app03_convidados.ui.all;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class AllGuestsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public AllGuestsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("All guests");
     }
 
     public LiveData<String> getText() {

@@ -1,16 +1,16 @@
-package com.alex.app03_convidados.ui.home;
+package com.alex.app03_convidados.ui.present;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class PresentViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public PresentViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("Presentes");
     }
 
     public LiveData<String> getText() {
