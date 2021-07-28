@@ -1,4 +1,4 @@
-package com.alex.app03_convidados.ui.absent;
+package com.alex.app03_convidados.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

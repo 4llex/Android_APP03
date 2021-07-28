@@ -1,16 +1,16 @@
-package com.alex.app03_convidados.ui.all;
+package com.alex.app03_convidados.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AllGuestsViewModel extends ViewModel {
+public class PresentViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public AllGuestsViewModel() {
+    public PresentViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("All guests");
+        mText.setValue("Presentes");
     }
 
     public LiveData<String> getText() {

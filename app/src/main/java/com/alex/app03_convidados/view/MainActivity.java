@@ -1,12 +1,11 @@
-package com.alex.app03_convidados;
+package com.alex.app03_convidados.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
 
+import com.alex.app03_convidados.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), GuestFormActivity.class));
+                startActivity(new Intent(getApplicationContext(), GuestActivity.class));
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

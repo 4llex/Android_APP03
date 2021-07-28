@@ -8,7 +8,8 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
+<!--    Include foi colocado acima pq dava um erro de nao funcionar o navigatiobar para atualizar o fragmente principal-->
+     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
