@@ -1,7 +1,10 @@
 package com.alex.app03_convidados.repository;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
+import com.alex.app03_convidados.constants.DataBaseConstants;
 import com.alex.app03_convidados.model.GuestModel;
 
 import java.util.ArrayList;
@@ -35,16 +38,57 @@ public class GuestRepository {
         return new ArrayList<>();
     }
 
-    public void insert(GuestModel guest){
+    public boolean insert(GuestModel guest){
+        try {
+            SQLiteDatabase db = this.mHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DataBaseConstants.GUEST.COLUMNS.NAME, guest.getName());
+            values.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, guest.getConfirmation());
+
+            db.insert(DataBaseConstants.GUEST.TABLE_NAME, null, values);
+            db.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean update(GuestModel guest){
+
+        try{
+            SQLiteDatabase db = this.mHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DataBaseConstants.GUEST.COLUMNS.NAME, guest.getName());
+            values.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, guest.getConfirmation());
+
+            String where = DataBaseConstants.GUEST.COLUMNS.ID + " = ?";
+            String[] args = {String.valueOf(guest.getId())};
+
+            db.update(DataBaseConstants.GUEST.TABLE_NAME, values, where, args);
+            db.close();
+            return true;
+        } catch (Exception e){
+            return false;
+        }
 
     }
 
-    public void update(GuestModel guest){
+    public boolean delete(int id){
 
-    }
+        try{
+            SQLiteDatabase db = this.mHelper.getWritableDatabase();
 
-    public void delete(GuestModel guest){
+            String where = DataBaseConstants.GUEST.COLUMNS.ID + " = ?";
+            String[] args = {String.valueOf(id)};
 
+            db.delete(DataBaseConstants.GUEST.TABLE_NAME, where, args);
+            db.close();
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
 

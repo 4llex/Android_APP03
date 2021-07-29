@@ -32,6 +32,6 @@ public class GuestDataBaseHelper  extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Atualiza o banco com a versao mais nova
-
+        String str = " ";
     }
 }
