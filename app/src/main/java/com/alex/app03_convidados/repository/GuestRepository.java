@@ -33,8 +33,37 @@ public class GuestRepository {
 
     // CRUD - create, read, update, delete
     public List<GuestModel> getList(){
-        mHelper.getReadableDatabase();
-        return new ArrayList<>();
+        List<GuestModel> list = new ArrayList<>();
+
+        try {
+            SQLiteDatabase db = this.mHelper.getReadableDatabase();
+
+            String table = DataBaseConstants.GUEST.TABLE_NAME;
+            String[] columns = {DataBaseConstants.GUEST.COLUMNS.ID,
+                    DataBaseConstants.GUEST.COLUMNS.NAME,
+                    DataBaseConstants.GUEST.COLUMNS.PRESENCE};
+
+
+            Cursor cursor = db.query(table, columns, null, null, null, null, null);
+            if (cursor != null && cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    int id = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.ID));
+                    String name = cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.NAME));
+                    int presence = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.PRESENCE));
+
+                    list.add(new GuestModel(id, name, presence));
+                }
+            }
+
+            if (cursor != null){
+                cursor.close();
+            }
+
+            return list;
+        } catch (Exception e){
+            return list;
+        }
+
     }
 
     public GuestModel load(int id){

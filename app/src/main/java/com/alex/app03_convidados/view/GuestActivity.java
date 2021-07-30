@@ -59,7 +59,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
             confirmation = GuestConstants.CONFIRMATION.ABSENT;
         }
 
-        GuestModel guest = new GuestModel(name, confirmation);
+        GuestModel guest = new GuestModel(0, name, confirmation);
         this.mViewModel.save(guest);
 
     }
