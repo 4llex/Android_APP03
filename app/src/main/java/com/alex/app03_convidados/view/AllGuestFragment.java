@@ -43,6 +43,12 @@ public class AllGuestFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.mViewModel.getList();
+    }
+
     private void observers() {
         this.mViewModel.guestList.observe(getViewLifecycleOwner(), new Observer<List<GuestModel>>() {
             @Override
