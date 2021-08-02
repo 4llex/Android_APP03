@@ -6,6 +6,8 @@ public class GuestConstants {
 
     }
 
+    public static String GUESTID = "guestId";
+
     public static class CONFIRMATION {
 
         public static int NOT_CONFIRMED = 0;
