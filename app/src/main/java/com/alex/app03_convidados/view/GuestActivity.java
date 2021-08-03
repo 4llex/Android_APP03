@@ -1,6 +1,7 @@
 package com.alex.app03_convidados.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.alex.app03_convidados.R;
 import com.alex.app03_convidados.constants.GuestConstants;
@@ -19,11 +21,12 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
 
     private ViewHolder mViewHolder = new ViewHolder();
     private GuestViewModel mViewModel;
+    private int mGuestId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_form);
+        setContentView(R.layout.activity_guest);
 
         this.mViewModel = new ViewModelProvider(this).get(GuestViewModel.class);
 
@@ -35,7 +38,44 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         this.mViewHolder.radioGroup = findViewById(R.id.radiogroup);
 
         this.setListeners();
+        this.setObservers();
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            this.mGuestId = bundle.getInt(GuestConstants.GUESTID);
+            this.mViewModel.load(this.mGuestId);
+        }
+
+    }
+
+    private void setObservers() {
+        this.mViewModel.gest.observe(this, new Observer<GuestModel>() {
+            @Override
+            public void onChanged(GuestModel guestModel) {
+                mViewHolder.editName.setText(guestModel.getName());
+
+                int conf = guestModel.getConfirmation();
+                mViewHolder.radioNotConfirmed.setChecked(conf == GuestConstants.CONFIRMATION.NOT_CONFIRMED);
+                mViewHolder.radioAbsent.setChecked(conf == GuestConstants.CONFIRMATION.ABSENT);
+                mViewHolder.radioPresent.setChecked(conf == GuestConstants.CONFIRMATION.PRESENT);
+            }
+        });
+
+        this.mViewModel.feedback.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    String str = "";
+                    if (mGuestId == 0){
+                        str = "Convidado inserido com Sucesso!";
+                    } else {
+                        str = "Convidado atualizado com Sucesso!";
+                    }
+                    Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
     }
 
     private void setListeners(){
@@ -59,7 +99,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
             confirmation = GuestConstants.CONFIRMATION.ABSENT;
         }
 
-        GuestModel guest = new GuestModel(0, name, confirmation);
+        GuestModel guest = new GuestModel(this.mGuestId, name, confirmation);
         this.mViewModel.save(guest);
 
     }
