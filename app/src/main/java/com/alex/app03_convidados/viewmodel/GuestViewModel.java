@@ -2,6 +2,7 @@ package com.alex.app03_convidados.viewmodel;
 
 import android.app.Application;
 
+import com.alex.app03_convidados.model.Feedback;
 import com.alex.app03_convidados.model.GuestModel;
 import com.alex.app03_convidados.repository.GuestRepository;
 
@@ -17,8 +18,8 @@ public class GuestViewModel  extends AndroidViewModel {
     private MutableLiveData<GuestModel> mGuest = new MutableLiveData<>();
     public LiveData<GuestModel> gest = this.mGuest;
 
-    private MutableLiveData<Boolean> mFeedback = new MutableLiveData<>();
-    public LiveData<Boolean> feedback = this.mFeedback;
+    private MutableLiveData<Feedback> mFeedback = new MutableLiveData<>();
+    public LiveData<Feedback> feedback = this.mFeedback;
 
     public GuestViewModel(@NonNull Application application) {
         super(application);
@@ -26,10 +27,24 @@ public class GuestViewModel  extends AndroidViewModel {
     }
 
     public void save(GuestModel guest){
+
+        if ("".equals(guest.getName())) {
+            this.mFeedback.setValue(new Feedback("Nome obrigatorio!", false));
+            return;
+        }
+
         if (guest.getId() == 0){
-            this.mFeedback.setValue(this.mRepository.insert(guest));
+            if (this.mRepository.insert(guest)) {
+                this.mFeedback.setValue(new Feedback("Convidado inserido com sucesso!"));
+            } else {
+                this.mFeedback.setValue(new Feedback("Erro inesperado!", false));
+            }
         } else {
-            this.mFeedback.setValue(this.mRepository.update(guest));
+            if (this.mRepository.update(guest)) {
+                this.mFeedback.setValue(new Feedback("Convidado atualizado com sucesso!"));
+            } else {
+                this.mFeedback.setValue(new Feedback("Erro inesperado!", false));
+            }
         }
 
     }
