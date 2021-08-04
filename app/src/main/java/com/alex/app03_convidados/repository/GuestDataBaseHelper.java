@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.alex.app03_convidados.constants.DataBaseConstants;
 
-import androidx.annotation.Nullable;
-
 public class GuestDataBaseHelper  extends SQLiteOpenHelper {
 
     private static String NAME = "convidados.bd";
