@@ -7,6 +7,7 @@ public class GuestConstants {
     }
 
     public static String GUESTID = "guestId";
+    public static String FILTER = "FILTER";
 
     public static class CONFIRMATION {
 

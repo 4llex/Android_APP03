@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.alex.app03_convidados.constants.DataBaseConstants;
+import com.alex.app03_convidados.constants.GuestConstants;
 import com.alex.app03_convidados.model.GuestModel;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class GuestRepository {
 
 
     // CRUD - create, read, update, delete
-    public List<GuestModel> getList(){
+    private List<GuestModel> getList(String selection, String[] selectionArgs){
         List<GuestModel> list = new ArrayList<>();
 
         try {
@@ -44,7 +45,7 @@ public class GuestRepository {
                     DataBaseConstants.GUEST.COLUMNS.PRESENCE};
 
 
-            Cursor cursor = db.query(table, columns, null, null, null, null, null);
+            Cursor cursor = db.query(table, columns, selection, selectionArgs, null, null, null);
             if (cursor != null && cursor.getCount() > 0){
                 while (cursor.moveToNext()){
                     int id = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.ID));
@@ -65,6 +66,26 @@ public class GuestRepository {
         }
 
     }
+
+    public List<GuestModel> getAll(){
+        return this.getList(null, null);
+    }
+
+    public List<GuestModel> getPresents(){
+
+        String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + " = ?";
+        String[] selectionArgs = {String.valueOf(GuestConstants.CONFIRMATION.PRESENT)};
+
+        return this.getList(selection, selectionArgs);
+    }
+
+    public List<GuestModel> getAbsents(){
+        String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + " = ?";
+        String[] selectionArgs = {String.valueOf(GuestConstants.CONFIRMATION.ABSENT)};
+
+        return this.getList(selection, selectionArgs);
+    }
+
 
     public GuestModel load(int id){
         try {

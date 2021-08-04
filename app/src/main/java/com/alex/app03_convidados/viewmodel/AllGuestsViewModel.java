@@ -2,6 +2,7 @@ package com.alex.app03_convidados.viewmodel;
 
 import android.app.Application;
 
+import com.alex.app03_convidados.constants.GuestConstants;
 import com.alex.app03_convidados.model.Feedback;
 import com.alex.app03_convidados.model.GuestModel;
 import com.alex.app03_convidados.repository.GuestRepository;
@@ -29,8 +30,15 @@ public class AllGuestsViewModel extends AndroidViewModel {
         this.mRepository = GuestRepository.getInstance(application.getApplicationContext());
     }
 
-    public void getList(){
-        this.mGuestList.setValue(this.mRepository.getList());
+    public void getList(int filter){
+        if (filter == GuestConstants.CONFIRMATION.NOT_CONFIRMED){
+            this.mGuestList.setValue(this.mRepository.getAll());
+        } else if (filter == GuestConstants.CONFIRMATION.PRESENT){
+            this.mGuestList.setValue(this.mRepository.getPresents());
+        } else if (filter == GuestConstants.CONFIRMATION.ABSENT){
+            this.mGuestList.setValue(this.mRepository.getAbsents());
+        }
+
     }
 
     public void delete(int id){
