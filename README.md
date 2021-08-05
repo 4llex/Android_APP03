@@ -1,5 +1,7 @@
 # Android_APP03
 
+## App desenvolvido no curso Android intermediario da udemy
+## Lista de convidados presentes e ausentes
 
 
 
