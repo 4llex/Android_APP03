@@ -16,9 +16,11 @@ public abstract class GuestDataBase extends RoomDatabase {
 
     public static GuestDataBase INSTANCE;
 
+    public abstract GuestDAO guestDAO();
+
     public static GuestDataBase getDatabase(Context context){
 
-        if (INSTANCE != null) {
+        if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context, GuestDataBase.class, "convidados")
                     .allowMainThreadQueries()
                     .addCallback(new Callback() {

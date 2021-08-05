@@ -27,7 +27,7 @@ public class AllGuestsViewModel extends AndroidViewModel {
 
     public AllGuestsViewModel(@NonNull Application application) {
         super(application);
-        this.mRepository = GuestRepository.getInstance(application.getApplicationContext());
+        this.mRepository = new GuestRepository(application.getApplicationContext());
     }
 
     public void getList(int filter){
